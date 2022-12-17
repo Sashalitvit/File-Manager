@@ -8,11 +8,11 @@ import isFile from '../helpers/isFile.js'
 
 export default async function handleCompress([pathToFile, pathToDestination]) {
     try {
-        const isNotDirectory = (await isDirectory(pathToDestination)) // |
-        const isNotFile = (await isFile(pathToDestination)) // |
+        const isDirectoryCheck = await isDirectory(pathToDestination)
+        const isFileCheck = await isFile(pathToDestination)
 
-        if (isNotDirectory) throw new Error("its not a directory")
-        if (isNotFile) throw new Error("its not a file")
+        if (!isDirectoryCheck) throw new Error("its not a directory")
+        if (!isFileCheck) throw new Error("its not a file")
 
         pathToFile = resolve(pathToFile)
         const { base } = parse(pathToFile)
@@ -28,6 +28,10 @@ export default async function handleCompress([pathToFile, pathToDestination]) {
         console.error('Operation failed')
     }
 }
+
+
+
+
 
 
 
