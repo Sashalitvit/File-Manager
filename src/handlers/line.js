@@ -10,7 +10,7 @@ export default function handleLine(eventEmitter, line) {
             .map((arg) => arg.replace(/"|'/g, ''))
         }
 
-        if (/^(?:cd|cat|add|rm|os|hash)$/.test(command) && args.lenght ===1) {
+        if (/^(?:cd|cat|add|rm|os|hash)$/.test(command) && args.length ===1) {
             eventEmitter.emit(command, args)
         } else if (
             /^(?:rn|cp|mv|compress|decompress)$/.test(command) &&

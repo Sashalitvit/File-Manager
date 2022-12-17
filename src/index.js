@@ -4,8 +4,8 @@ import {
     argv,
     chdir,
     exit,
-    stdin as input,
-    stdout as output,
+   stdin,
+    stdout,
 } from 'node:process'
 import * as readline from 'node:readline'
 import handleAdd from './handlers/add.js'
@@ -58,8 +58,8 @@ eventEmitter
  .on('decompress', handleDecompress)
 
  const rl = readline.createInterface({
-    input,
-    output
+    input: stdin,
+    output: stdout
  })
 
  rl.on('line', handleLine.bind(rl, eventEmitter))
