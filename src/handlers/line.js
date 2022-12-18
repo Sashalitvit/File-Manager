@@ -1,28 +1,23 @@
 export default function handleLine(eventEmitter, line) {
     try {
-        line = line.trim()
         let [command, ...args] = line.split(' ')
 
-        if (/"|'/g.test(args)){
-            args = args
-            .join(' ')
-            .split(/["'] | ["']/)
-            .map((arg) => arg.replace(/"|'/g, ''))
-        }
-
-        if (/^(?:cd|cat|add|rm|os|hash)$/.test(command) && args.length ===1) {
-            eventEmitter.emit(command, args)
-        } else if (
-            /^(?:rn|cp|mv|compress|decompress)$/.test(command) &&
-            args.length === 2
-        ) {
-            eventEmitter.emit(command, args)
-        } else if (/^(?:up|ls)$/.test(line)) {
-            eventEmitter.emit(command)
-        } else if (/^\.exit$/.test(command)) {
-            this.close()
-        } else {
-            throw new Error('Invalid input')
+        switch(true){
+            case(['cd', 'cat', 'add', 'rm', 'os', 'hash'].includes(command) && args.length === 1):
+                eventEmitter.emit(command, args);
+                break;
+            case(['rn', 'cp', 'mv', 'compress', 'decompress'].includes(command) && args.length === 2):
+                eventEmitter.emit(command, args);
+                break;
+            case(['up', 'ls'].includes(command)):
+                eventEmitter.emit(command);
+                break;
+            case(command === '.exit'):
+                this.close();
+                break;
+            default:
+               console.info('Invalid input');
+               break;
         }
     } catch (error) {
         console.error(error.massage)
